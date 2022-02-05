@@ -18,4 +18,22 @@ router.post('/', async (req, res)=>{
 
 }) 
 
+router.get('/:idFornecedor', async (req, res)=>{
+
+    try{
+        const id = req.params.id;
+        const fornecedor = new Fornecedor({id: id})
+        await fornecedor.carregar()
+        res.send(
+            JSON.stringify(fornecedor)
+        )
+    
+    }catch(e){
+        res.send(JSON.stringify({
+            message: e.message
+        }))
+    }
+
+})
+
 module.exports = router;
