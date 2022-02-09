@@ -1,3 +1,4 @@
+const { ValidationErrorItemType } = require('sequelize/dist');
 const TabelaFornecedor = require('./TabelaFornecedor');
 
 class Fornecedor{
@@ -13,6 +14,7 @@ class Fornecedor{
     }
 
     async criar(){
+        this.validar()
         const response = await TabelaFornecedor.inserir({
             empresa: this.empresa,
             email: this.email,
@@ -56,6 +58,22 @@ class Fornecedor{
         }
 
         await TabelaFornecedor.atualizar(this.id, dadosAtualizar)
+    }
+
+    async delete(){
+        return TabelaFornecedor.delete(this.id)
+    }
+
+    validar(){
+        const campos = ['empresa', 'email', 'categoria']
+
+        campos.forEach(campo =>{
+            const valor = this[campo]
+
+            if(typeof valor !== 'string' || valor === 0){
+                throw new Error(`o Campo ${campo} esta invalido`)
+            }
+        })
     }
 
 }

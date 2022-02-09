@@ -2,33 +2,43 @@ const router = require('express').Router()
 const TabelaFornecedor = require('./TabelaFornecedor')
 const Fornecedor = require('./Fornecedor');
 
-router.get('/', async (req, res)=> {
-    
+router.get('/', async (req, res) => {
+
     const response = await TabelaFornecedor.listar()
     const resp = JSON.stringify(response)
     res.send(resp)
 })
 
-router.post('/', async (req, res)=>{
-    const dataRecived = req.body;
-    const fornecedor = new Fornecedor(dataRecived);
-    await fornecedor.criar()
-    
-    res.send(JSON.stringify(fornecedor))
+router.post('/', async (req, res) => {
 
-}) 
 
-router.get('/:idFornecedor', async (req, res)=>{
+    try {
+        const dataRecived = req.body;
+        const fornecedor = new Fornecedor(dataRecived);
+        await fornecedor.criar()
 
-    try{
+        res.send(JSON.stringify(fornecedor))
+    } catch (error) {
+        res.send(
+            JSON.stringify({
+                message: error.message
+            })
+        )
+    }
+
+})
+
+router.get('/:idFornecedor', async (req, res) => {
+
+    try {
         const id = req.params.id;
-        const fornecedor = new Fornecedor({id: id})
+        const fornecedor = new Fornecedor({ id: id })
         await fornecedor.carregar()
         res.send(
             JSON.stringify(fornecedor)
         )
-    
-    }catch(e){
+
+    } catch (e) {
         res.send(JSON.stringify({
             message: e.message
         }))
@@ -37,17 +47,17 @@ router.get('/:idFornecedor', async (req, res)=>{
 
 })
 
-router.put('/:idFornecedor', async (req, res) =>{
-    
-    try{
+router.put('/:idFornecedor', async (req, res) => {
+
+    try {
         const id = req.params.id
         const dataRecived = req.body
-        const dados = Object.assign({}, dadosRecebidos, {id: id})
+        const dados = Object.assign({}, dadosRecebidos, { id: id })
 
         const fornecedor = new Fornecedor(dados);
         await fornecedor.atualizar()
         res.end()
-    }catch(e){
+    } catch (e) {
         res.send(
             JSON.stringify({
                 message: e.message
@@ -56,6 +66,22 @@ router.put('/:idFornecedor', async (req, res) =>{
     }
 })
 
+router.delete(':idFornecedor', async (req, res) => {
+
+    try {
+        const id = req.params.idFornecedor
+        const fornecedor = new Fornecedor({ id: id })
+        await fornecedor.carregar()
+        await fornecedor.delete()
+        res.end()
+    } catch (e) {
+        res.send(
+            JSON.stringify({
+                message: e.message
+            })
+        )
+    }
+})
 
 
 module.exports = router;
