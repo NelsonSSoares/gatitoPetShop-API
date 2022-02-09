@@ -19,5 +19,14 @@ module.exports = {
             throw new Error('Fornecedor not found');
         }
         return encontrado;
+    },
+
+    atualizar(id, dadosAtualizar){
+        return Modelo.update(
+            dadosAtualizar,
+            {
+                where: {id: id}
+            }
+        )
     }
 }

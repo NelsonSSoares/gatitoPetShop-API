@@ -34,6 +34,28 @@ router.get('/:idFornecedor', async (req, res)=>{
         }))
     }
 
+
 })
+
+router.put('/:idFornecedor', async (req, res) =>{
+    
+    try{
+        const id = req.params.id
+        const dataRecived = req.body
+        const dados = Object.assign({}, dadosRecebidos, {id: id})
+
+        const fornecedor = new Fornecedor(dados);
+        await fornecedor.atualizar()
+        res.end()
+    }catch(e){
+        res.send(
+            JSON.stringify({
+                message: e.message
+            })
+        )
+    }
+})
+
+
 
 module.exports = router;
