@@ -5,6 +5,7 @@ const Fornecedor = require('./Fornecedor');
 router.get('/', async (req, res) => {
 
     const response = await TabelaFornecedor.listar()
+    res.status(200)
     const resp = JSON.stringify(response)
     res.send(resp)
 })
@@ -16,7 +17,7 @@ router.post('/', async (req, res) => {
         const dataRecived = req.body;
         const fornecedor = new Fornecedor(dataRecived);
         await fornecedor.criar()
-
+        res.status(201)
         res.send(JSON.stringify(fornecedor))
     } catch (error) {
         res.send(
@@ -34,6 +35,7 @@ router.get('/:idFornecedor', async (req, res) => {
         const id = req.params.id;
         const fornecedor = new Fornecedor({ id: id })
         await fornecedor.carregar()
+        res.status(200)
         res.send(
             JSON.stringify(fornecedor)
         )
@@ -56,6 +58,7 @@ router.put('/:idFornecedor', async (req, res) => {
 
         const fornecedor = new Fornecedor(dados);
         await fornecedor.atualizar()
+        res.status(204)
         res.end()
     } catch (e) {
         res.send(
@@ -73,6 +76,7 @@ router.delete(':idFornecedor', async (req, res) => {
         const fornecedor = new Fornecedor({ id: id })
         await fornecedor.carregar()
         await fornecedor.delete()
+        res.status(204)
         res.end()
     } catch (e) {
         res.send(
@@ -82,6 +86,8 @@ router.delete(':idFornecedor', async (req, res) => {
         )
     }
 })
+
+
 
 
 module.exports = router;
