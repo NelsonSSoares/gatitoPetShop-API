@@ -20,6 +20,7 @@ router.post('/', async (req, res) => {
         res.status(201)
         res.send(JSON.stringify(fornecedor))
     } catch (error) {
+        res.status(400)
         res.send(
             JSON.stringify({
                 message: error.message
@@ -41,6 +42,7 @@ router.get('/:idFornecedor', async (req, res) => {
         )
 
     } catch (e) {
+        res.status(404)
         res.send(JSON.stringify({
             message: e.message
         }))
@@ -61,6 +63,7 @@ router.put('/:idFornecedor', async (req, res) => {
         res.status(204)
         res.end()
     } catch (e) {
+        res.status(400)
         res.send(
             JSON.stringify({
                 message: e.message
@@ -79,6 +82,7 @@ router.delete(':idFornecedor', async (req, res) => {
         res.status(204)
         res.end()
     } catch (e) {
+        res.status(404)
         res.send(
             JSON.stringify({
                 message: e.message
