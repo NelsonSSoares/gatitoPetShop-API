@@ -1,4 +1,4 @@
-const { ValidationErrorItemType } = require('sequelize/dist');
+
 const TabelaFornecedor = require('./TabelaFornecedor');
 
 class Fornecedor{
