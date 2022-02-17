@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const TabelaFornecedor = require('./TabelaFornecedor')
 const Fornecedor = require('./Fornecedor');
-const NaoEncontrado = require('../../erros/NaoEncontrado')
+
 
 router.get('/', async (req, res) => {
 
@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     res.send(resp)
 })
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, proximo) => {
 
 
     try {
@@ -21,17 +21,12 @@ router.post('/', async (req, res) => {
         res.status(201)
         res.send(JSON.stringify(fornecedor))
     } catch (error) {
-        res.status(400)
-        res.send(
-            JSON.stringify({
-                message: error.message
-            })
-        )
+       proximo(error)
     }
 
 })
 
-router.get('/:idFornecedor', async (req, res) => {
+router.get('/:idFornecedor', async (req, res, proximo) => {
 
     try {
         const id = req.params.id;
@@ -43,10 +38,7 @@ router.get('/:idFornecedor', async (req, res) => {
         )
 
     } catch (e) {
-        res.status(404)
-        res.send(JSON.stringify({
-            message: e.message
-        }))
+        proximo(e)
     }
 
 
@@ -68,7 +60,7 @@ router.put('/:idFornecedor', async (req, res, proximo) => {
     }
 })
 
-router.delete(':idFornecedor', async (req, res) => {
+router.delete(':idFornecedor', async (req, res, proximo) => {
 
     try {
         const id = req.params.idFornecedor
@@ -78,12 +70,7 @@ router.delete(':idFornecedor', async (req, res) => {
         res.status(204)
         res.end()
     } catch (e) {
-        res.status(404)
-        res.send(
-            JSON.stringify({
-                message: e.message
-            })
-        )
+        proximo(e)
     }
 })
 

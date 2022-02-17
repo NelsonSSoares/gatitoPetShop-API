@@ -2,19 +2,32 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const config = require('config');
+const router = require('./routes/fornecedores');
 const NaoEncontrado = require('./erros/NaoEncontrado')
+const CampoInvalido = require('./erros/CampoInvalido')
+const DadosNaoFornecidos = require('./erros/DadosNaoFornecidos');
 
 app.use(bodyParser.json());
 
-const router = require('./routes/fornecedores');
+
+
 app.use('./api/fornecedores', router);
 
 app.use((error, req, res, proximo)=>{
+    let status = 500
+
     if (error instanceof NaoEncontrado) {
-        res.status(404)
-    } else {
-        res.status(400)
+        status = 404
+        
     }
+    if(error instanceof CampoInvalido || error instanceof DadosNaoFornecidos){
+        status = 400
+        
+    }
+
+
+
+    res.status(status)
 
     res.send(
         JSON.stringify({
