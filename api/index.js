@@ -6,6 +6,7 @@ const router = require('./routes/fornecedores');
 const NaoEncontrado = require('./erros/NaoEncontrado')
 const CampoInvalido = require('./erros/CampoInvalido')
 const DadosNaoFornecidos = require('./erros/DadosNaoFornecidos');
+const ValorNaoSuportado = require('./erros/ValorNaoSuportado');
 
 app.use(bodyParser.json());
 
@@ -23,6 +24,10 @@ app.use((error, req, res, proximo)=>{
     if(error instanceof CampoInvalido || error instanceof DadosNaoFornecidos){
         status = 400
         
+    }
+
+    if(error instanceof ValorNaoSuportado){
+        status = 406
     }
 
 
