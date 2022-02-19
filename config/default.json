@@ -1,11 +1,11 @@
 {
-    "mysql":{
-        "database": "catpetshop",
-        "user": "root",
-        "password": "12345",
+    "mysql": {
+        "banco-de-dados": "catpetshop",
+        "usuario": "root",
+        "senha": "12345",
         "host": "127.0.0.1"
     },
-    "api":{
-        "door": 3000
+    "api": {
+        "porta": 3000
     }
 }

@@ -1,22 +1,22 @@
-const Sequelize = require('sequelize');
-const instancia = require('../../db/database');
+const Sequelize = require('sequelize')
+const instancia = require('../../banco-de-dados')
 
-
-const columns = {
-    empresa:{
+const colunas = {
+    empresa: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    email:{
-       type: Sequelize.STRING,
-       allowNull: false 
+    email: {
+        type: Sequelize.STRING,
+        allowNull: false
     },
-    categoria:{
+    categoria: {
         type: Sequelize.ENUM('ração', 'brinquedos'),
         allowNull: false
     }
 }
-const settings = {
+
+const opcoes = {
     freezeTableName: true,
     tableName: 'fornecedores',
     timestamps: true,
@@ -25,4 +25,4 @@ const settings = {
     version: 'versao'
 }
 
-module.exports = instancia.define('fornecedor', columns, settings );
+module.exports = instancia.define('fornecedor', colunas, opcoes)

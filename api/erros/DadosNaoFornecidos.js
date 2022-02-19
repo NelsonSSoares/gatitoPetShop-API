@@ -1,9 +1,9 @@
-class DadosNaoFornecidos extends Error{
-    constructor(){
-        super('SEM DADOS DISPONIVEIS PARA UPDATE!!!!')
-        this.name = 'Dados não fornecidos'
-        this.idError = 2
+class DadosNaoFornecidos extends Error {
+    constructor () {
+        super('Não foram fornecidos dados para atualizar!')
+        this.name = 'DadosNaoFornecidos'
+        this.idErro = 2
     }
 }
 
-module.exports = DadosNaoFornecidos;
+module.exports = DadosNaoFornecidos
