@@ -28,6 +28,7 @@ app.use((req, res, proximo )=>{
 })
 
 const roteador = require('./rotas/fornecedores')
+const { SerializadorError } = require('./Serializador')
 app.use('/api/fornecedores', roteador)
 
 app.use((erro, requisicao, resposta, proximo) => {
@@ -45,9 +46,12 @@ app.use((erro, requisicao, resposta, proximo) => {
         status = 406
     }
 
+    const serializador = new SerializadorError(
+        resposta.getHeader('Content-Type')
+    )
     resposta.status(status)
     resposta.send(
-        JSON.stringify({
+        serializador.serializar({
             mensagem: erro.message,
             id: erro.idErro
         })

@@ -1,7 +1,6 @@
 const roteador = require('express').Router()
 const TabelaFornecedor = require('./TabelaFornecedor')
 const Fornecedor = require('./Fornecedor')
-const res = require('express/lib/response')
 const SerializadorFornecedor = require('../../Serializador').SerializadorFornecedor
 
 roteador.get('/', async (requisicao, resposta) => {
@@ -40,7 +39,8 @@ roteador.get('/:idFornecedor', async (requisicao, resposta, proximo) => {
         await fornecedor.carregar()
         resposta.status(200)
         const serializador = new SerializadorFornecedor(
-            resposta.getHeader('Content-Type')
+            resposta.getHeader('Content-Type'),
+            ['email','dataCriacao','datAtualizacao','versao']
         )
         resposta.send(
             serializador.serializar(fornecedor)
